@@ -22,6 +22,7 @@ public class Main {
 		// Variables
 		int run = 0;
 		String Sentinel = null;
+		String Sentinel2 = null;
 
 		do {
 			System.out.println("Files available for selection:");
@@ -29,9 +30,12 @@ public class Main {
 			System.out.print("\nSelect a file to examine: ");
 			run = (input.nextInt() - 1);
 			String line = LOCATION + library[run].getName();
+			String tcrLine = LOCATION+library[2].getName();
 
 			ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+			ArrayList<ArrayList<Integer>> tcrList1 = new ArrayList<>();
 			list = getData(line);
+			tcrList1 = getData(tcrLine);
 
 			System.out.println("\n " + library[run].getName() + " File contents");
 			for (int i = 0; i < 10; i++) {
@@ -42,6 +46,13 @@ public class Main {
 			System.out.println("The matrix is Antireflexive: " + isAntiReflexive(list));
 			System.out.println("The matrix is Symmetric: " + isSymmetric(list));
 			System.out.println("The matrix is AntiSymmetric: " + isAntiSymmetric(list));
+			System.out.print("\nPress X to see extra credit attempt: ");
+			input.nextLine();
+			Sentinel2 = input.next();
+			if (Sentinel2.equalsIgnoreCase("x")) {
+				transitiveClose(tcrList1);
+			}
+				
 
 			System.out.println("\n\nDo it again? Y/N");
 			input.nextLine();
@@ -76,6 +87,27 @@ public class Main {
 			ArrayList<Integer> row = new ArrayList<>();
 			for (String z : y) {
 				int num = Integer.parseInt(z);
+				row.add(num);
+			}
+			values.add(row);
+		}
+		stdIn.close();
+		return values;
+	}
+	
+	public static ArrayList<ArrayList<Boolean>> getDataBool(String line) throws UnsupportedEncodingException, IOException {
+		ArrayList<ArrayList<Boolean>> values = new ArrayList<>();
+		File file = new File(line);
+		Scanner stdIn = new Scanner(file);
+
+		while (stdIn.hasNextLine()) {
+			String x = stdIn.nextLine();
+			if (x.isEmpty())
+				continue;
+			String[] y = x.split(" ");
+			ArrayList<Boolean> row = new ArrayList<>();
+			for (String z : y) {
+				boolean num = toBool(z);
 				row.add(num);
 			}
 			values.add(row);
@@ -127,11 +159,47 @@ public class Main {
 		return false;
 	}
 
-	public static boolean toBool(int x) {
-		if (x == 1) 
+	public static boolean toBool(String x) {
+		if (x.equals("1")) 
 			return true;
 		 else
 			return false;
 	}
+	
+	public static String fromBool(boolean x) {
+		if (x) 
+			return "1";
+		 else
+			return "0";
+	}
+	
+	public static void transitiveClose(ArrayList<ArrayList<Integer>> file) throws UnsupportedEncodingException, IOException {
+		ArrayList<ArrayList<Boolean>> tcrList2 = getDataBool(LOCATION+"matrix3.txt");
+	    System.out.println("\n  Matrix3.txt File contents");
+	    for (int i = 0; i < 10; i++) {
+	        System.out.println(file.get(i));
+	    }
+
+
+	    for (int i = 0; i < 10; i++) {
+	        for (int j = 0; j < 10; j++) {
+	            for (int k = 0; k < 10; k++) {
+	                tcrList2.get(j).set(k, tcrList2.get(j).get(k) || (tcrList2.get(j).get(i) && tcrList2.get(i).get(k)));
+				}
+			}
+		}
+	    System.out.println("\n");
+	    System.out.println("The Transitive closure of relation for Matrix 3 is:");
+	    for (int i = 0; i < 10; i++) {
+	    	for (int k = 0; k < 10; k++) {
+	    		boolean x = tcrList2.get(i).get(k);
+	    		System.out.print(fromBool(x)+" ");
+	    		if(k==9)
+	    			System.out.println();
+	    	}
+	    }
+
+	}
+	
 
 }

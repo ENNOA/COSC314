@@ -1,11 +1,9 @@
 package Project1;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main_Bool_test {
@@ -105,15 +103,11 @@ public class Main_Bool_test {
 			for (int j = 1; j < 10; j++) {
 				if (i==j) 
 					j++;
-				else if (j==i+2) {
-					j--;
-					i++;
-				}
-				else if (file.get(i).get(j) == file.get(j).get(i)) 
-					return true;					
+				else if (file.get(i).get(j) != file.get(j).get(i)) 
+					return false;					
 			}
 		}
-		return false;
+		return true;
 	}
 
 	public static boolean isAntiSymmetric(ArrayList<ArrayList<Boolean>> file) {
@@ -121,15 +115,11 @@ public class Main_Bool_test {
 			for (int j = 1; j < 10; j++) {
 				if (i==j) 
 					j++;
-				else if (j==i+2) {
-					j--;
-					i++;
-				}
-				else if (file.get(i).get(j) != file.get(j).get(i)) 
-					return true;					
+				else if (file.get(i).get(j) == file.get(j).get(i)) 
+					return false;					
 			}
 		}
-		return false;
+		return true;
 	}
 
 	public static boolean toBool(String x) {
