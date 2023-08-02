@@ -1,4 +1,4 @@
-package project2;
+package Project2;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,7 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 public class Main {
-	static String LOCATION = System.getProperty("user.dir") + "\\src\\inputs\\";
+	//static String LOCATION = System.getProperty("user.dir") + "\\src\\inputs\\";
 	static Scanner input = new Scanner(System.in);
 	private static final int INF = Integer.MAX_VALUE;
 	private static ArrayList<ArrayList<Integer>> distanceMatrix;
@@ -19,9 +19,11 @@ public class Main {
 		String start = null;
 		String end = null;
 		//populate 2d arraylist with data
-		distanceMatrix = getDistances(LOCATION + "distance_matrix.txt");
+		//distanceMatrix = getDistances(LOCATION + "distance_matrix.txt");
+		distanceMatrix = getDistances("src"+File.separator+"inputFiles"+File.separator+"distance_matrix.txt");
 		//populate arraylist with data
-		getCodes(LOCATION + "airport_codes.txt");
+		//getCodes(LOCATION + "airport_codes.txt");
+		getCodes("src"+File.separator+"inputFiles"+File.separator+"airport_codes.txt");
 
 
 		//print list of airport codes
