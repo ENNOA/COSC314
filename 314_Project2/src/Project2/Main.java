@@ -75,6 +75,7 @@ public class Main {
 		stdIn.close();
 		return distances;
 	}
+	
 	//Method to get data from text file and place into 1d arraylist
 	private static ArrayList<String> getCodes(String line) throws FileNotFoundException {
 		File file = new File(line);
@@ -88,7 +89,6 @@ public class Main {
 			}
 		}
 		stdIn.close();
-
 		return codes;
 	}
 
@@ -96,35 +96,30 @@ public class Main {
 		int[] distances = new int[distanceMatrix.size()];
 		Arrays.fill(distances, INF);
 		distances[src] = 0;
-
 		boolean[] visited = new boolean[distanceMatrix.size()];
 
 		for (int i = 0; i < distanceMatrix.size(); i++) {
 			int minDist = INF;
-			int minV = -1;
+			int nearV = -1;
 
 			for (int j = 0; j < distanceMatrix.size(); j++) {
 				if (!visited[j] && distances[j] < minDist) {
 					minDist = distances[j];
-					minV = j;
+					nearV = j;
 				}
 			}
 
-			if (minV == -1) {
-				// All remaining vertices are unreachable from the src
+			if (nearV == -1) 
 				break;
-			}
-
-			visited[minV] = true;
+			
+			visited[nearV] = true;
 
 			for (int k = 0; k < distanceMatrix.size(); k++) {
-				int weight = distanceMatrix.get(minV).get(k);
-				if (weight != INF && distances[minV] + weight < distances[k]) {
-					distances[k] = distances[minV] + weight;
-				}
+				int weight = distanceMatrix.get(nearV).get(k);
+				if (weight != INF && distances[nearV] + weight < distances[k]) 
+					distances[k] = distances[nearV] + weight;
 			}
 		}
-
 		return distances;
 	}
 
